@@ -1,0 +1,16 @@
+﻿  ChildFrm.cpp
+  EditDLG.cpp
+C:\Users\khali\OneDrive\Рабочий стол\lab4\lab4\EditDLG.cpp(66,21): warning C4101: ue: неиспользованная локальная переменная
+  MainDlg.cpp
+C:\Users\khali\OneDrive\Рабочий стол\lab4\lab4\MainDlg.cpp(64,21): warning C4101: ue: неиспользованная локальная переменная
+  MainFrm.cpp
+  UserControllDLG.cpp
+C:\Users\khali\OneDrive\Рабочий стол\lab4\lab4\UserControllDLG.cpp(82,21): warning C4101: e: неиспользованная локальная переменная
+C:\Users\khali\OneDrive\Рабочий стол\lab4\lab4\UserControllDLG.cpp(123,22): warning C4101: ue: неиспользованная локальная переменная
+  lab4.cpp
+  lab4Doc.cpp
+C:\Users\khali\OneDrive\Рабочий стол\lab4\lab4\lab4Doc.cpp(53,21): warning C4101: ce: неиспользованная локальная переменная
+C:\Users\khali\OneDrive\Рабочий стол\lab4\lab4\lab4Doc.cpp(79,21): warning C4101: ce: неиспользованная локальная переменная
+  lab4View.cpp
+  Создание кода...
+  lab4.vcxproj -> C:\Users\khali\OneDrive\Рабочий стол\lab4\Debug\lab4.exe

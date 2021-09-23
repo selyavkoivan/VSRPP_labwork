@@ -1,0 +1,14 @@
+﻿Z:\Microsoft Visual Studio\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(513,5): warning MSB8028: промежуточный каталог (Debug\) содержит файлы, которые используются совместно с другим проектом (MiniDraw.vcxproj).  Это может привести к ошибкам очистки и перестроения.
+  pch.cpp
+  ChildFrm.cpp
+  ClassView.cpp
+  FileView.cpp
+  MainFrm.cpp
+  MiniDraw.cpp
+  MiniDrawDoc.cpp
+  MiniDrawView.cpp
+  OutputWnd.cpp
+  PropertiesWnd.cpp
+  ViewTree.cpp
+  Создание кода...
+  MiniDraw.vcxproj -> C:\Users\User\Desktop\ВСРПП\лабы\selyavko-task-i\Debug\selyavko-task-i.exe

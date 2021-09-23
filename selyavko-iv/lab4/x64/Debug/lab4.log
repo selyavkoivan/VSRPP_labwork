@@ -1,0 +1,19 @@
+﻿Z:\Microsoft Visual Studio\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(513,5): warning MSB8028: промежуточный каталог (x64\Debug\) содержит файлы, которые используются совместно с другим проектом (lab4.vcxproj).  Это может привести к ошибкам очистки и перестроения.
+  pch.cpp
+  ChildFrm.cpp
+  EditDLG.cpp
+C:\Users\User\Desktop\ВСРПП\лабы\selyavko-iv\lab4\EditDLG.cpp(70,22): warning C4101: ue: неиспользованная локальная переменная
+  lab4.cpp
+  lab4Doc.cpp
+C:\Users\User\Desktop\ВСРПП\лабы\selyavko-iv\lab4\lab4Doc.cpp(53,21): warning C4101: ce: неиспользованная локальная переменная
+C:\Users\User\Desktop\ВСРПП\лабы\selyavko-iv\lab4\lab4Doc.cpp(79,21): warning C4101: ce: неиспользованная локальная переменная
+  lab4View.cpp
+  MainDlg.cpp
+C:\Users\User\Desktop\ВСРПП\лабы\selyavko-iv\lab4\MainDlg.cpp(68,22): warning C4101: ue: неиспользованная локальная переменная
+  MainFrm.cpp
+  UserControllDLG.cpp
+C:\Users\User\Desktop\ВСРПП\лабы\selyavko-iv\lab4\UserControllDLG.cpp(95,21): warning C4101: e: неиспользованная локальная переменная
+C:\Users\User\Desktop\ВСРПП\лабы\selyavko-iv\lab4\UserControllDLG.cpp(137,22): warning C4101: ue: неиспользованная локальная переменная
+C:\Users\User\Desktop\ВСРПП\лабы\selyavko-iv\lab4\UserControllDLG.cpp(212,21): warning C4101: e: неиспользованная локальная переменная
+  Создание кода...
+  lab4.vcxproj -> C:\Users\User\Desktop\ВСРПП\лабы\selyavko-iv\x64\Debug\selyavko-iv.exe

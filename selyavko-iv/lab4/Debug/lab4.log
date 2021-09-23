@@ -1,0 +1,18 @@
+﻿  pch.cpp
+  ChildFrm.cpp
+  EditDLG.cpp
+C:\Users\User\source\repos\selyavko-iv\lab4\EditDLG.cpp(70,22): warning C4101: ue: неиспользованная локальная переменная
+  lab4.cpp
+  lab4Doc.cpp
+C:\Users\User\source\repos\selyavko-iv\lab4\lab4Doc.cpp(53,21): warning C4101: ce: неиспользованная локальная переменная
+C:\Users\User\source\repos\selyavko-iv\lab4\lab4Doc.cpp(79,21): warning C4101: ce: неиспользованная локальная переменная
+  lab4View.cpp
+  MainDlg.cpp
+C:\Users\User\source\repos\selyavko-iv\lab4\MainDlg.cpp(68,22): warning C4101: ue: неиспользованная локальная переменная
+  MainFrm.cpp
+  UserControllDLG.cpp
+C:\Users\User\source\repos\selyavko-iv\lab4\UserControllDLG.cpp(95,21): warning C4101: e: неиспользованная локальная переменная
+C:\Users\User\source\repos\selyavko-iv\lab4\UserControllDLG.cpp(137,22): warning C4101: ue: неиспользованная локальная переменная
+C:\Users\User\source\repos\selyavko-iv\lab4\UserControllDLG.cpp(212,21): warning C4101: e: неиспользованная локальная переменная
+  Создание кода...
+  lab4.vcxproj -> C:\Users\User\source\repos\selyavko-iv\Debug\lab4.exe
