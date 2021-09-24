@@ -1,5 +1,2 @@
 ﻿Z:\Microsoft Visual Studio\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(513,5): warning MSB8028: промежуточный каталог (Debug\) содержит файлы, которые используются совместно с другим проектом (lab4.vcxproj).  Это может привести к ошибкам очистки и перестроения.
-  UserControllDLG.cpp
-C:\Users\User\Desktop\ВСРПП\лабы\selyavko-task-ii\selyavko-task-ii-b\lab4\UserControllDLG.cpp(109,21): warning C4101: e: неиспользованная локальная переменная
-C:\Users\User\Desktop\ВСРПП\лабы\selyavko-task-ii\selyavko-task-ii-b\lab4\UserControllDLG.cpp(156,22): warning C4101: ue: неиспользованная локальная переменная
   lab4.vcxproj -> C:\Users\User\Desktop\ВСРПП\лабы\selyavko-task-ii\selyavko-task-ii-b\Debug\selyavko-task-ii-b.exe

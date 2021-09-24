@@ -17,9 +17,6 @@ UserControllDLG::UserControllDLG(ADODB::_CommandPtr cmd, CWnd* pParent /*=nullpt
 	, _list()
 	, _cmd(cmd)
 	, _choice(_T(""))
-	, Name(FALSE)
-	, Count(FALSE)
-	, Reason(FALSE)
 {
 
 }
@@ -34,9 +31,6 @@ void UserControllDLG::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_LIST2, _list);
 	_update_users(0);
 	DDX_LBString(pDX, IDC_LIST2, _choice);
-	DDX_Radio(pDX, IDC_RADIO1, Name);
-	DDX_Radio(pDX, IDC_RADIO3, Count);
-	DDX_Radio(pDX, IDC_RADIO2, Reason);
 	DDX_Control(pDX, IDC_EDIT1, Edit);
 }
 
@@ -63,19 +57,35 @@ void UserControllDLG::_update_users(int field)
 	
 	try
 	{
-		CString Value;
-		Edit.GetWindowTextW(Value);
+	
 		_bstr_t command = "SELECT * FROM lossTime";
 		switch (field)
 		{
 		case 1: command += " ORDER BY name"; break;
 		case 2: command += " ORDER BY reasonIsSerious"; break;
 		case 3: command += " ORDER BY countOfMissedHours"; break;
-		case 4: command += " WHERE name LIKE '%" + _bstr_t(Value) + "%'"; break;
-		case 5: command += " WHERE reasonIsSerious = " + _bstr_t(Value); break;
-		case 6: command += " WHERE countOfMissedHours = " + _bstr_t(Value); break;
+		case 4:
+		{
+			CString Value;
+			Edit.GetWindowTextW(Value); 
+			command += " WHERE name LIKE '%" + _bstr_t(Value) + "%'";
+			break;
 		}
-		
+		case 5:
+		{
+			CString Value;
+			Edit.GetWindowTextW(Value); 
+			command += " WHERE reasonIsSerious = " + _bstr_t(Value);
+			break;
+		}
+		case 6:
+		{
+			CString Value;
+			Edit.GetWindowTextW(Value); 
+			command += " WHERE countOfMissedHours = " + _bstr_t(Value); 
+			break;
+		}
+		}
 		auto hr = _pRs->Open(command, _cmd->ActiveConnection->ConnectionString, ADODB::adOpenStatic, ADODB::adLockOptimistic, ADODB::adCmdText);
 		if (FAILED(hr))
 		{
