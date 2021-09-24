@@ -26,10 +26,13 @@ protected:
 public:
 	afx_msg void OnBnClickedButton1();
 	CString _new_name;
+	CString countOfMissedHours_new;
 private:
 	CString visits_new;
 	CButton _add_button;
 	ADODB::_CommandPtr _cmd;
 public:
 	afx_msg void OnBnClickedOk();
+
+	BOOL isSerious;
 };

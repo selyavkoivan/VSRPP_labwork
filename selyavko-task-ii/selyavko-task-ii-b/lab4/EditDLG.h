@@ -32,4 +32,5 @@ private:
 	_CommandPtr _cmd;
 public:
 	afx_msg void OnBnClickedOk();
+	BOOL isSerious;
 };

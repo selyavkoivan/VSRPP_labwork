@@ -14,8 +14,9 @@ IMPLEMENT_DYNAMIC(AddDlg, CDialogEx)
 AddDlg::AddDlg(ADODB::_CommandPtr cmd, CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_DIALOG1, pParent)
 	, _new_name(_T(""))
-	, visits_new(_T(""))
+	, countOfMissedHours_new(_T(""))
 	, _cmd(cmd)
+	, isSerious(FALSE)
 {
 
 }
@@ -28,10 +29,11 @@ void AddDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Text(pDX, IDC_EDIT1, _new_name);
-	DDV_MaxChars(pDX, _new_name, 30);
-	DDX_Text(pDX, IDC_EDIT2, visits_new);
-	DDV_MaxChars(pDX, visits_new, 10);
+	DDV_MaxChars(pDX, _new_name, 100);
+	DDX_Text(pDX, IDC_EDIT2, countOfMissedHours_new);
+	DDV_MaxChars(pDX, countOfMissedHours_new, 10);
 	DDX_Control(pDX, IDC_BUTTON1, _add_button);
+	DDX_Check(pDX, IDC_CHECK1, isSerious);
 }
 
 
@@ -47,13 +49,14 @@ void AddDlg::OnBnClickedButton1()
 {
 	UpdateData(TRUE);
 	
-	_bstr_t insert_stmt("INSERT INTO LABA4(name, visits) VALUES (");
+	_bstr_t insert_stmt("INSERT INTO lossTime(name, countOfMissedHours, reasonIsSerious) VALUES (");
 	insert_stmt += "'";
 	insert_stmt += _new_name.GetBuffer();
 	insert_stmt += "' , ";
-	insert_stmt += visits_new.GetBuffer();
+	insert_stmt += countOfMissedHours_new.GetBuffer();
+	insert_stmt += " , ";
+	insert_stmt += isSerious ? "true" : "false";
 	insert_stmt += ");";
-
 	_cmd->CommandText = insert_stmt;
 	_cmd->CommandType = ADODB::adCmdText;
 
@@ -63,10 +66,9 @@ void AddDlg::OnBnClickedButton1()
 	}
 	catch (_com_error& ue)
 	{
-		MessageBox(CString("Name isn't unique!"));
+		MessageBox(CString("ОШИБКА! Проверьте введенные вами данные"));
 	}
-	_new_name = "";
-	visits_new = "";
+	
 
 	UpdateData(TRUE);
 	

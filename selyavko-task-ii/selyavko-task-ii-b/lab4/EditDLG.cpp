@@ -17,6 +17,7 @@ EditDLG::EditDLG(_CommandPtr cmd, Student *user, CWnd* pParent /*=nullptr*/)
 	, _ntm(_T(""))
 	, _cmd(cmd)
 	, _user(user)
+	, isSerious(FALSE)
 {
 
 }
@@ -32,6 +33,7 @@ void EditDLG::DoDataExchange(CDataExchange* pDX)
 	DDV_MaxChars(pDX, _nname, 30);
 	DDX_Text(pDX, IDC_EDIT2, _ntm);
 	DDV_MaxChars(pDX, _ntm, 10);
+	DDX_Check(pDX, IDC_CHECK1, isSerious);
 }
 
 
@@ -48,13 +50,18 @@ END_MESSAGE_MAP()
 void EditDLG::OnBnClickedOk()
 {
 	UpdateData(TRUE);
-	_bstr_t update_stmt = "UPDATE LABA4 SET name = '";
+	_bstr_t update_stmt = "UPDATE lossTime SET name = '";
 	update_stmt += _nname.GetBuffer();
-	update_stmt += "', visits = ";
+	update_stmt += "', countOfMissedHours = ";
 	update_stmt += _ntm.GetBuffer();
-	update_stmt += " WHERE name = '";
-	update_stmt += _user->name.GetBuffer();
-	update_stmt += "';";
+	update_stmt += ", reasonIsSerious = ";
+	update_stmt += isSerious ? "true" : "false";
+	update_stmt += " WHERE ID = ";
+	CString s;
+	s.AppendFormat(_T("%d"), _user->ID);
+	_bstr_t ss(s);
+	update_stmt += ss;
+	update_stmt += ";";
 
 	_cmd->CommandText = update_stmt;
 	_cmd->CommandType = ADODB::adCmdText;
@@ -65,7 +72,7 @@ void EditDLG::OnBnClickedOk()
 	}
 	catch (_com_error& ue)
 	{
-		MessageBox(CString("Имя должно быть уникально"));
+		MessageBox(CString("Данные введены неверно"));
 	}
 
 

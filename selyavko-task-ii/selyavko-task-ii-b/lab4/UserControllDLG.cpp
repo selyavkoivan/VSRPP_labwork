@@ -17,6 +17,9 @@ UserControllDLG::UserControllDLG(ADODB::_CommandPtr cmd, CWnd* pParent /*=nullpt
 	, _list()
 	, _cmd(cmd)
 	, _choice(_T(""))
+	, Name(FALSE)
+	, Count(FALSE)
+	, Reason(FALSE)
 {
 
 }
@@ -29,8 +32,12 @@ void UserControllDLG::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_LIST2, _list);
-	_update_users();
+	_update_users(0);
 	DDX_LBString(pDX, IDC_LIST2, _choice);
+	DDX_Radio(pDX, IDC_RADIO1, Name);
+	DDX_Radio(pDX, IDC_RADIO3, Count);
+	DDX_Radio(pDX, IDC_RADIO2, Reason);
+	DDX_Control(pDX, IDC_EDIT1, Edit);
 }
 
 
@@ -39,21 +46,37 @@ BEGIN_MESSAGE_MAP(UserControllDLG, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON2, &UserControllDLG::OnBnClickedButton2)
 	ON_BN_CLICKED(IDOK, &UserControllDLG::OnBnClickedOk)
 	ON_LBN_SELCHANGE(IDC_LIST2, &UserControllDLG::OnLbnSelchangeList2)
+	ON_BN_CLICKED(IDC_BUTTON4, &UserControllDLG::OnBnClickedButton4)
+	ON_BN_CLICKED(IDC_BUTTON3, &UserControllDLG::OnBnClickedButton3)
+	ON_BN_CLICKED(IDC_BUTTON5, &UserControllDLG::OnBnClickedButton5)
 END_MESSAGE_MAP()
 
 
 // Обработчики сообщений UserControllDLG
 
 
-void UserControllDLG::_update_users()
+void UserControllDLG::_update_users(int field)
 {
 	ADODB::_RecordsetPtr _pRs("ADODB.Recordset");
 	CCustomRs _rs;
 	IADORecordBindingPtr _picRs(_pRs);
-
+	
 	try
 	{
-		auto hr = _pRs->Open(L"SELECT name, visits FROM LABA4 ORDER BY name", _cmd->ActiveConnection->ConnectionString, ADODB::adOpenStatic, ADODB::adLockOptimistic, ADODB::adCmdText);
+		CString Value;
+		Edit.GetWindowTextW(Value);
+		_bstr_t command = "SELECT * FROM lossTime";
+		switch (field)
+		{
+		case 1: command += " ORDER BY name"; break;
+		case 2: command += " ORDER BY reasonIsSerious"; break;
+		case 3: command += " ORDER BY countOfMissedHours"; break;
+		case 4: command += " WHERE name LIKE '%" + _bstr_t(Value) + "%'"; break;
+		case 5: command += " WHERE reasonIsSerious = " + _bstr_t(Value); break;
+		case 6: command += " WHERE countOfMissedHours = " + _bstr_t(Value); break;
+		}
+		
+		auto hr = _pRs->Open(command, _cmd->ActiveConnection->ConnectionString, ADODB::adOpenStatic, ADODB::adLockOptimistic, ADODB::adCmdText);
 		if (FAILED(hr))
 		{
 			_com_issue_error(hr);
@@ -69,9 +92,13 @@ void UserControllDLG::_update_users()
 		_users.clear();
 		while (!_pRs->ADOEOF)
 		{
+			
 			Student user;
-			user.name = CString((_rs._username_status == ADODB::adFieldOK ? _rs._username : "<ERROR USERNAME>"));
-			user.visits = (_rs.visits_status == ADODB::adFieldOK ? _rs.visits : -1);
+			user.ID = (_rs.ID);
+			user.username = CString((_rs._username_status == ADODB::adFieldOK ? _rs._username : "<ERROR USERNAME>"));
+			user.countOfMissedHours = (_rs.countOfMissedHours_status == ADODB::adFieldOK ? _rs.countOfMissedHours : 1);
+			user.reasonIsSerious = (_rs.reasonIsSerious_status == ADODB::adFieldOK ? _rs.reasonIsSerious : -1);
+			
 
 			_users.push_back(user);
 
@@ -81,10 +108,11 @@ void UserControllDLG::_update_users()
 	}
 	catch (_com_error& e)
 	{
-		exit(-2);
+		if (field == 0) exit(-2);
+		else MessageBox(CString("ОШИБКА! Введите верные данные для фильтрации"));
 	}
-
 	_update_screenlist();
+	
 }
 
 void UserControllDLG::_update_screenlist()
@@ -93,11 +121,14 @@ void UserControllDLG::_update_screenlist()
 
 	for (auto user_i : _users)
 	{
+		
 		CString out;
-		out.AppendFormat(_T("%s посетил %d занятий в этом семестре"), user_i.name, user_i.visits);
-
+		out.AppendFormat(_T("%s пропустил %d часов по "), user_i.username, user_i.countOfMissedHours);
+		out += user_i.reasonIsSerious ? "уважительной причине" : "неуважительной причине";
+	
 		_list.AddString(out);
 	}
+	
 }
 
 
@@ -108,10 +139,12 @@ void UserControllDLG::OnBnClickedButton1()
 
 	if (choice_i != LB_ERR)
 	{
-		_bstr_t insert_stmt("DELETE FROM LABA4 WHERE name = ");
-		insert_stmt += "'";
-		insert_stmt += _users[choice_i].name.GetBuffer();
-		insert_stmt += "';";
+		_bstr_t insert_stmt("DELETE FROM lossTime WHERE ID = ");
+		CString s;
+		s.AppendFormat(_T("%d"), _users[choice_i].ID);
+		_bstr_t ss(s);
+		insert_stmt += ss;
+		insert_stmt += ";";
 
 		_cmd->CommandText = insert_stmt;
 		_cmd->CommandType = ADODB::adCmdText;
@@ -125,7 +158,7 @@ void UserControllDLG::OnBnClickedButton1()
 			exit(-1);
 		}
 
-		_update_users();
+		_update_users(0);
 	}
 }
 
@@ -137,7 +170,7 @@ void UserControllDLG::OnBnClickedButton2()
 	{
 		EditDLG edit(_cmd, &_users[choice_i]);
 		edit.DoModal();
-		_update_users();
+		_update_users(0);
 	}
 }
 
@@ -152,4 +185,28 @@ void UserControllDLG::OnBnClickedOk()
 void UserControllDLG::OnLbnSelchangeList2()
 {
 	// TODO: добавьте свой код обработчика уведомлений
+}
+
+
+void UserControllDLG::OnBnClickedButton4()
+{
+	if (IsDlgButtonChecked(IDC_RADIO1)) _update_users(1);
+	else if (IsDlgButtonChecked(IDC_RADIO2)) _update_users(2);
+	else if (IsDlgButtonChecked(IDC_RADIO3)) _update_users(3);
+	else MessageBox(CString("Выберите поле для сортировки"));
+}
+
+
+void UserControllDLG::OnBnClickedButton3()
+{
+	if (IsDlgButtonChecked(IDC_RADIO1)) _update_users(4);
+	else if (IsDlgButtonChecked(IDC_RADIO2)) _update_users(5);
+	else if (IsDlgButtonChecked(IDC_RADIO3)) _update_users(6);
+	else MessageBox(CString("Выберите поле для фильтрации"));
+}
+
+
+void UserControllDLG::OnBnClickedButton5()
+{
+	_update_users(0);
 }

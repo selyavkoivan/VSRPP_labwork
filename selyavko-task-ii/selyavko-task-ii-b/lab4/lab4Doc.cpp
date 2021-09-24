@@ -34,7 +34,7 @@ END_MESSAGE_MAP()
 Clab4Doc::Clab4Doc() noexcept
 {
 	CoInitialize(nullptr);
-	_bstr_t strCon("sqldns");
+	_bstr_t strCon("ex2");
 	try
 	{
 		auto hr = _db.CreateInstance((__uuidof(ADODB::Connection)));
